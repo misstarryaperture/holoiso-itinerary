@@ -28,7 +28,6 @@ exfatprogs
 f2fs-tools
 fatresize
 fsarchiver
-gnu-netcat
 gpart
 gpm
 gptfdisk
@@ -82,7 +81,6 @@ pptpclient
 pv
 qemu-guest-agent
 refind
-reiserfsprogs
 rp-pppoe
 rsync
 rxvt-unicode-terminfo
@@ -115,21 +113,17 @@ wvdial
 xfsprogs
 xl2tpd
 zsh
-
-# GUI
 holo-keyring
 plasma
 plasma-nm
 plasma-meta
 xorg-server
-vim
 xdg-user-dirs
 bash-completion
 networkmanager
 network-manager-applet
 mousepad
 gvfs
-neofetch
 xfce4-pulseaudio-plugin
 pulseaudio-alsa
 noto-fonts
@@ -139,9 +133,6 @@ dialog
 dolphin
 spectacle
 konsole
-# rz608-fix-git - Unrequired since we use LNX6+ for machines that include it
-
-# Another HoloISO addons -- BETA
 btop
 dos2unix
 gptfdisk
