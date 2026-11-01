@@ -30,7 +30,7 @@ check_download(){
 }
 
 partitioning(){
-	echo "Select your drive in popup:"
+	echo "Select ya drive in popup:"
 
 	DRIVEDEVICE=$(lsblk -d -o NAME | sed "1d" | awk '{ printf "FALSE""\0"$0"\0" }' | \
 xargs -0 zenity --list --width=600 --height=512 --title="Select disk" --text="Select your disk to install HoloISO in below:\n\n $(lsblk -d -o NAME,MAJ:MIN,RM,SIZE,RO,TYPE,VENDOR,MODEL,SERIAL,MOUNTPOINT)" \
@@ -41,19 +41,19 @@ xargs -0 zenity --list --width=600 --height=512 --title="Select disk" --text="Se
 	INSTALLDEVICE="${DEVICE}"
 
 	if [ ! -b $DEVICE ]; then
-		echo "$DEVICE not found! Installation Aborted!"
+		echo "nope! $DEVICE not found! Installation Aborted!"
 		exit 1
 	fi
 	lsblk $DEVICE | head -n2 | tail -n1 | grep disk > /dev/null 2>&1
 	if [ $? != 0 ]; then
-		echo "$DEVICE is not disk type! Installation Aborted!"
+		echo "nope! $DEVICE is not disk type! Installation Aborted!"
 		echo "\nNote: If you wish to perform partitioned installation,\nPlease specify the disk drive node first then select \"2\" for partition install."
 		exit 1
 	fi
 	echo "\nChoose your partitioning type:"
 	install=$(zenity --list --title="Choose your installation type:" --column="Type" --column="Name" 1 "Erase entire drive" \2 "Install alongside existing OS/Partition (Requires at least 50 GB of FREE and UNFORMATTED space from the end)"  --width=700 --height=220)
 	if [[ -n "$(sudo blkid | grep holo-home | cut -d ':' -f 1 | head -n 1)" ]]; then
-		HOME_REUSE_TYPE=$(zenity --list --title="Warning" --text="HoloISO home partition was detected at $(sudo blkid | grep holo-home | cut -d ':' -f 1 | head -n 1). Please select an appropriate action below:" --column="Type" --column="Name" 1 "Format it and start over" \2 "Reuse partition"  --width=500 --height=220)
+		HOME_REUSE_TYPE=$(zenity --list --title="Warning" --text="HoloISO-Itinerary home partition was detected at $(sudo blkid | grep holo-home | cut -d ':' -f 1 | head -n 1). Please select an appropriate action below:" --column="Type" --column="Name" 1 "Format it and start over" \2 "Reuse partition"  --width=500 --height=220)
 		if [[ "$HOME_REUSE_TYPE" == "2" ]]; then
 		mkdir -p /tmp/home
 		mount $(sudo blkid | grep holo-home | cut -d ':' -f 1 | head -n 1) /tmp/home
@@ -87,7 +87,7 @@ xargs -0 zenity --list --width=600 --height=512 --title="Select disk" --text="Se
 					echo "30" ; sleep 1
 					echo "Starting flatpak data migration.\nThis may take 2 to 10 minutes to complete."
 					rsync -axHAWXS --numeric-ids --info=progress2 --no-inc-recursive /tmp/rootpart/var/lib/flatpak /tmp/home/.steamos/offload/var/lib/ |    tr '\r' '\n' |    awk '/^ / { print int(+$2) ; next } $0 { print "# " $0 }'
-					echo "Finished."
+					echo "I'm Finished!"
 					) |
 					zenity --progress --title="Preparing to reuse home at $(sudo blkid | grep holo-home | cut -d ':' -f 1 | head -n 1)" --text="Your installation will reuse following user: ${HOLOUSER} \n\nStarting to move following directories to target offload:\n\n- /opt\n- /root\n- /srv\n- /usr/lib/debug\n- /usr/local\n- /var/cache/pacman\n- /var/lib/docker\n- /var/lib/systemd/coredump\n- /var/log\n- /var/tmp\n" --width=500 --no-cancel --percentage=0 --auto-close
 					umount -l $(sudo blkid | grep holo-home | cut -d ':' -f 1 | head -n 1)
@@ -158,7 +158,7 @@ xargs -0 zenity --list --width=600 --height=512 --title="Select disk" --text="Se
 				echo "\nCreating new gpt partitions..."
 				parted ${DEVICE} mklabel gpt
 			else
-				echo "\nNothing has been written.\nYou canceled the destructive install, please try again"
+				echo "\nNothing has been written.\nYou canceled the laxatives install, please try again"
 				echo 'Press any key to exit...'; read -k1 -s
 				exit 1
 			fi
@@ -169,7 +169,7 @@ xargs -0 zenity --list --width=600 --height=512 --title="Select disk" --text="Se
 			echo "HoloISO will be installed on the following free (unallocated) space.\n"
 			parted $DEVICE print free | tail -n2 | grep "Free Space"
 			if [ $? != 0 ]; then
-				echo "Error! No Free Space found on the end of the disk.\nNothing has been written.\nYou canceled the non-destructive install, please try again"
+				echo "Error! No Free Space found on the end of the disk.\nNothing has been written.\nYou canceled the non-laxatives install, please try again"
 				exit 1
 				echo 'Press any key to exit...'; read -k1 -s
 			fi
@@ -178,7 +178,7 @@ xargs -0 zenity --list --width=600 --height=512 --title="Select disk" --text="Se
 			then
         		echo "\nBeginning installation..."
 			else
-				echo "\nNothing has been written.\nYou canceled the non-destructive install, please try again"
+				echo "\nNothing has been written.\nYou canceled the non-laxatives install, please try again"
 				echo 'Press any key to exit...'; read -k1 -s
 				exit 1
         		fi
@@ -334,7 +334,7 @@ full_install() {
 		arch-chroot ${HOLO_INSTALL_DIR} pacman -U --noconfirm $(find /etc/holoinstall/post_install/pkgs_addon | grep win600-xpad-dkms)
 	fi
 	if [[ "${FIRMWARE_INSTALL}" == "1" ]]; then
-		echo "You're running this on a Steam Deck. linux-firmware-neptune will be installed to ensure maximum kernel-side compatibility."
+		echo "Oh Wow! You're running this on a Steam Deck. linux-firmware-neptune will be installed to ensure maximum kernel-side compatibility."
 		arch-chroot ${HOLO_INSTALL_DIR} pacman -Rdd --noconfirm linux-firmware
 		arch-chroot ${HOLO_INSTALL_DIR} pacman -U --noconfirm $(find /etc/holoinstall/post_install/pkgs_addon | grep linux-firmware-neptune)
 		arch-chroot ${HOLO_INSTALL_DIR} mkinitcpio -P
@@ -353,7 +353,7 @@ full_install() {
 	echo -e "[General]\nDisplayServer=wayland\n\n[Autologin]\nUser=${HOLOUSER}\nSession=gamescope-wayland.desktop\nRelogin=true\n\n[X11]\n# Janky workaround for wayland sessions not stopping in sddm, kills\n# all active sddm-helper sessions on teardown\nDisplayStopCommand=/usr/bin/gamescope-wayland-teardown-workaround" >> ${HOLO_INSTALL_DIR}/etc/sddm.conf.d/autologin.conf
 	arch-chroot ${HOLO_INSTALL_DIR} usermod -a -G rfkill ${HOLOUSER}
 	arch-chroot ${HOLO_INSTALL_DIR} usermod -a -G wheel ${HOLOUSER}
-	echo "Preparing Steam OOBE..."
+	echo "Preparing Steam OOBE...?"
 	arch-chroot ${HOLO_INSTALL_DIR} sudo -u ${HOLOUSER} mkdir -p ~/.local/share/Steam
 	arch-chroot ${HOLO_INSTALL_DIR} sudo -u ${HOLOUSER} tar xf /usr/lib/steam/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
 	arch-chroot ${HOLO_INSTALL_DIR} sudo -u ${HOLOUSER} touch ~/.steam/steam/.cef-enable-remote-debugging

@@ -1,0 +1,16 @@
+NAME="HoloISO Itinerary"
+PRETTY_NAME="HoloISO Itinerary"
+ID=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;255;0;255"
+HOME_URL="https://github.com/misstarryaperture/holoiso-itinerary"
+DOCUMENTATION_URL="https://wiki.archlinux.org/"
+SUPPORT_URL="https://bbs.archlinux.org/"
+BUG_REPORT_URL="https://gitlab.archlinux.org/groups/archlinux/-/issues"
+PRIVACY_POLICY_URL="https://terms.archlinux.org/docs/privacy-policy/"
+LOGO=HoloISO
+VARIANT="Forked from holoiso-eol/holoiso"
+VARIANT_ID=steamdeck
+VERSION_CODENAME="amethyst"
+VERSION_ID="Itinerary"
+VENDOR_NAME="HoloISO"
