@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
-iso_name="$(cat /tmp/isobuildname)"
-iso_label="HOLO_$(date +%Y%m)"
-iso_publisher="theVakhovske <https://github.com/theVakhovskeIsTaken>"
-iso_application="HoloISO"
+iso_name="holoiso-itinerary"
+iso_label="holoiso-itnerary_$(date +%Y%m)"
+iso_publisher="TarryAperture <https://github.com/misstarryaperture>"
+iso_application="HoloISO-Itinerary"
 iso_version="1"
 install_dir="arch"
 buildmodes=('iso')
