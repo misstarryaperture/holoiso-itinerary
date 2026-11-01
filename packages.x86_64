@@ -146,9 +146,6 @@ btop
 dos2unix
 gptfdisk
 iotop
-lib32-mesa-vdpau
-libva-mesa-driver
-mesa-vdpau
 okular
 opencl-mesa
 p7zip
